@@ -25,11 +25,6 @@ What else will you find:
 
 # Usage Sample
 
-Add the i18next.js after the jquery JavaScript.
-
-    <script type="text/javascript" src="jquery-1.6.4.min.js"></script>
-    <script type="text/javascript" src="i18next-[version].js"></script>
-
 Add your resourcefile under /locales/en-US/translation.json
 
     {

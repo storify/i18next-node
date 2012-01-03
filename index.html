@@ -1,0 +1,228 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>i18n - translation made easy</title>
+        <link rel='stylesheet' href='public/css/main.css' type='text/css' media='all' />
+        <link rel="stylesheet" href="public/css/prettify.css" type="text/css" />
+        <link rel="stylesheet" href="public/css/flexible-nav.min.css" type="text/css" />
+        <script type="text/javascript" src="public/js/jquery-1.6.4.min.js"></script>
+        <script type="text/javascript" src="public/js/prettify.js"></script>
+        <script type="text/javascript" src="public/js/flexible-nav.min.js"></script>
+</head>
+
+<body>
+
+<div id="forkme">
+    <a href="https://github.com/jamuhl/i18next"><img src="public/img/gihub_ribbon.png"></a>
+</div>
+
+<header>
+    <a href="">
+        <h1 id="title" style="display: none;">i18next</h1>
+        <h2 id="subtitle" style="display: none;">ranslation made easy</h2>
+    </a>
+</header>
+
+<section id='content'>
+
+<h3>Grab the sources</h3>
+
+<p><Download the latest source or fork the project from github:</p>
+
+<p><section id="download"> 
+    <a class="button" href="public/downloads/i18next-1.0.tar.gz">i18next v1.0</a> 
+    <a class="button" href="public/downloads/staticSample.tar.gz">sample</a> 
+</section></p>
+
+<h1>Introduction</h1>
+
+<p>There are a lot of great javascripts modules around to bring translation to clientside web, but there 
+where always some features i missed.</p>
+
+<p>Mostly:</p>
+
+<ul>
+<li>Usage of namespaces: split needed translation in more than one file (to share them to other projects, eg. for buttons)</li>
+<li>load resourcesfiles from static source or from a dynamic generated file</li>
+<li>have a jquery function to translate all tags marked with a <strong>data-i18n</strong> attibute</li>
+<li>have an option to post missing translations to the server</li>
+<li>graceful fallback: if it doesn't find a translation in <em>en-US</em> look first in <em>en</em> befor taking value from fallback language</li>
+<li>support for localstorage</li>
+</ul>
+
+<p>What else will you find:</p>
+
+<ul>
+<li>support for pluralized strings</li>
+<li>insertion of variables into translations</li>
+<li>translation nesting</li>
+</ul>
+
+<h1>Usage Sample</h1>
+
+<p>Add the i18next.js after the jquery JavaScript.</p>
+
+<pre><code><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/javascript"</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"jquery-1.6.4.min.js"</span><span class="tag">&gt;&lt;/script&gt;</span><span class="pln"><br /></span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/javascript"</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"i18next-[version].js"</span><span class="tag">&gt;&lt;/script&gt;</span><span class="pln"><br /></span></code></pre>
+
+<p>Add your resourcefile under /locales/en-US/translation.json</p>
+
+<pre><code><span class="pun">{</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="str">"app"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"name"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"i18n"</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="pun">},</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="str">"creator"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"firstname"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"Jan"</span><span class="pun">,</span><span class="pln"><br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"lastname"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"Mühlemann"</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"><br /></span><span class="pun">}</span><span class="pln"><br /></span></code></pre>
+
+<p>Init and use the module:</p>
+
+<pre><code><span class="pln">$</span><span class="pun">.</span><span class="pln">i18n</span><span class="pun">.</span><span class="pln">init</span><span class="pun">({},</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">t</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="com">// will init i18n with default settings and set language from navigator</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="kwd">var</span><span class="pln"> appName </span><span class="pun">=</span><span class="pln"> t</span><span class="pun">(</span><span class="str">'app.name'</span><span class="pun">);</span><span class="pln"> </span><span class="com">// -&gt; i18n</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="kwd">var</span><span class="pln"> creator </span><span class="pun">=</span><span class="pln"> t</span><span class="pun">(</span><span class="str">'creator.firstname'</span><span class="pun">)</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> </span><span class="str">' '</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> t</span><span class="pun">(</span><span class="str">'creator.lastname'</span><span class="pun">);</span><span class="pln"> </span><span class="com">// -&gt; Jan Mühlemann</span><span class="pln"><br /></span><span class="pun">});</span><span class="pln"><br /></span></code></pre>
+
+<p>After initialisation you can use <strong>$.t()</strong> instead of setting translation in the init callback:</p>
+
+<pre><code><span class="kwd">var</span><span class="pln"> appName </span><span class="pun">=</span><span class="pln"> $</span><span class="pun">.</span><span class="pln">t</span><span class="pun">(</span><span class="str">'app.name'</span><span class="pun">);</span><span class="pln"> </span><span class="com">// -&gt; i18n</span><span class="pln"><br /></span></code></pre>
+
+<p>To change the language:</p>
+
+<pre><code><span class="pln">$</span><span class="pun">.</span><span class="pln">i18n</span><span class="pun">.</span><span class="pln">setLng</span><span class="pun">(</span><span class="str">'de-DE'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">t</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="com">// will load needed resources if not provided on init </span><span class="pln"><br />&nbsp; &nbsp; </span><span class="com">// and set the currentLanguage</span><span class="pln"><br /></span><span class="pun">});</span><span class="pln"><br /></span></code></pre>
+
+<p>If no resource string is found in the specific language (en-US) it will be looked up in <em>en</em> befor taken from fallback language. 
+If the key is not in the fallback language the key or a optional defaultValue will be displayed:</p>
+
+<pre><code><span class="kwd">var</span><span class="pln"> takeDefault </span><span class="pun">=</span><span class="pln"> $</span><span class="pun">.</span><span class="pln">t</span><span class="pun">(</span><span class="str">'app.type'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln">defaultValue</span><span class="pun">:</span><span class="pln"> </span><span class="str">'OpenSource'</span><span class="pun">});</span><span class="pln"> </span><span class="com">// -&gt; OpenSource</span><span class="pln"><br /></span></code></pre>
+
+<h3>or use the jquery function</h3>
+
+<pre><code><span class="com">// given resource</span><span class="pln"><br /></span><span class="str">"nav"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="str">"home"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"home"</span><span class="pun">,</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="str">"1"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"link1"</span><span class="pun">,</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="str">"2"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"link2"</span><span class="pln"><br /></span><span class="pun">}</span><span class="pln"><br /><br /></span><span class="com">// given html</span><span class="pln"><br /></span><span class="pun">&lt;</span><span class="pln">ul </span><span class="kwd">class</span><span class="pun">=</span><span class="str">"nav"</span><span class="pun">&gt;</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="pun">&lt;</span><span class="pln">li </span><span class="kwd">class</span><span class="pun">=</span><span class="str">"active"</span><span class="pun">&gt;&lt;</span><span class="pln">a href</span><span class="pun">=</span><span class="str">"#"</span><span class="pln"> data</span><span class="pun">-</span><span class="pln">i18n</span><span class="pun">=</span><span class="str">"nav.home"</span><span class="pun">&gt;</span><span class="pln">home</span><span class="pun">&lt;</span><span class="str">/a&gt;&lt;/</span><span class="pln">li</span><span class="pun">&gt;</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="str">&lt;li&gt;</span><span class="pun">&lt;</span><span class="pln">a href</span><span class="pun">=</span><span class="str">"#"</span><span class="pln"> data</span><span class="pun">-</span><span class="pln">i18n</span><span class="pun">=</span><span class="str">"nav.1"</span><span class="pun">&gt;</span><span class="pln">link1</span><span class="pun">&lt;</span><span class="str">/a&gt;&lt;/</span><span class="pln">li</span><span class="pun">&gt;</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="str">&lt;li&gt;</span><span class="pun">&lt;</span><span class="pln">a href</span><span class="pun">=</span><span class="str">"#"</span><span class="pln"> data</span><span class="pun">-</span><span class="pln">i18n</span><span class="pun">=</span><span class="str">"nav.2"</span><span class="pun">&gt;</span><span class="pln">link2</span><span class="pun">&lt;</span><span class="str">/a&gt;&lt;/</span><span class="pln">li</span><span class="pun">&gt;</span><span class="pln"><br /></span><span class="pun">&lt;</span><span class="str">/ul&gt;<br /><br />/</span><span class="pun">/</span><span class="pln"> just </span><span class="kwd">do</span><span class="pln"> to translate all elements having attribute _data</span><span class="pun">-</span><span class="pln">i18n_<br />$</span><span class="pun">(</span><span class="str">'.nav'</span><span class="pun">).</span><span class="pln">i18n</span><span class="pun">();</span><span class="pln"><br /></span></code></pre>
+
+<p>Every child element with an <em>data-i18n</em> attribute will be translated with given key.</p>
+
+<h3>Basic options for init</h3>
+
+<pre><code><span class="pln">$</span><span class="pun">.</span><span class="pln">i18n</span><span class="pun">.</span><span class="pln">init</span><span class="pun">({</span><span class="pln"><br />&nbsp; &nbsp; &nbsp; lng</span><span class="pun">:</span><span class="pln"> </span><span class="str">'en-US'</span><span class="pln"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="com">// defaults to get from navigator</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="pun">,</span><span class="pln"> fallbackLng</span><span class="pun">:</span><span class="pln"> </span><span class="str">'en'</span><span class="pln"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="com">// defaults to 'dev'</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="pun">,</span><span class="pln"> ns</span><span class="pun">:</span><span class="pln"> </span><span class="str">'myNamespace'</span><span class="pln"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="com">// defaults to 'tranalation'</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="pun">,</span><span class="pln"> resGetPath</span><span class="pun">:</span><span class="pln"> </span><span class="str">'myFolder/__lng__/__ns__.json'</span><span class="pln"> </span><span class="com">// defaults to 'locales/__lng__/__ns__.json' where ns = translation (default)</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="pun">,</span><span class="pln"> useLocalStorage</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">false</span><span class="pln"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="com">// defaults to true</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="pun">,</span><span class="pln"> resStore</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{...}</span><span class="pln"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="com">// if you don't want your resources to be loaded you can provide the resources</span><span class="pln"><br /></span><span class="pun">});</span><span class="pln"><br /></span></code></pre>
+
+<h1>Extended Samples</h1>
+
+<h3>loading multiple namespaces</h3>
+
+<p>Set the ns option to an array on i18n init:</p>
+
+<pre><code><span class="pln">$</span><span class="pun">.</span><span class="pln">i18n</span><span class="pun">.</span><span class="pln">init</span><span class="pun">({</span><span class="pln"><br />&nbsp; &nbsp; lng</span><span class="pun">:</span><span class="pln"> </span><span class="str">'en-US'</span><span class="pun">,</span><span class="pln"><br />&nbsp; &nbsp; ns</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> namespaces</span><span class="pun">:</span><span class="pln"> </span><span class="pun">[</span><span class="str">'ns.common'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'ns.special'</span><span class="pun">],</span><span class="pln"> defaultNs</span><span class="pun">:</span><span class="pln"> </span><span class="str">'ns.special'</span><span class="pun">}</span><span class="pln"><br /></span><span class="pun">});</span><span class="pln"><br /></span></code></pre>
+
+<p>This will load <strong>en-US</strong>, <strong>en</strong> and <strong>dev</strong> resources for two namespaces ('ns.special' and 'ns.common'):</p>
+
+<pre><code><span class="pln">locales<br />&nbsp; &nbsp;</span><span class="pun">|</span><span class="pln"><br />&nbsp; &nbsp;</span><span class="pun">+--</span><span class="pln"> en</span><span class="pun">-</span><span class="pln">US<br />&nbsp; &nbsp;</span><span class="pun">|</span><span class="pln"> &nbsp; &nbsp; </span><span class="pun">|</span><span class="pln"><br />&nbsp; &nbsp;</span><span class="pun">|</span><span class="pln"> &nbsp; &nbsp; </span><span class="pun">+--</span><span class="pln"> ns</span><span class="pun">.</span><span class="pln">common<br />&nbsp; &nbsp;</span><span class="pun">|</span><span class="pln"> &nbsp; &nbsp; </span><span class="pun">+--</span><span class="pln"> ns</span><span class="pun">.</span><span class="pln">special<br />&nbsp; &nbsp;</span><span class="pun">|</span><span class="pln"> &nbsp; &nbsp; &nbsp;<br />&nbsp; &nbsp;</span><span class="pun">+--</span><span class="pln"> en<br />&nbsp; &nbsp;</span><span class="pun">|</span><span class="pln"> &nbsp; &nbsp;</span><span class="pun">|</span><span class="pln"><br />&nbsp; &nbsp;</span><span class="pun">|</span><span class="pln"> &nbsp; &nbsp;</span><span class="pun">+--</span><span class="pln"> ns</span><span class="pun">.</span><span class="pln">common<br />&nbsp; &nbsp;</span><span class="pun">|</span><span class="pln"> &nbsp; &nbsp;</span><span class="pun">+--</span><span class="pln"> ns</span><span class="pun">.</span><span class="pln">special<br />&nbsp; &nbsp;</span><span class="pun">|</span><span class="pln"> <br />&nbsp; &nbsp;</span><span class="pun">+--</span><span class="pln"> dev<br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">|</span><span class="pln"><br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">+--</span><span class="pln"> ns</span><span class="pun">.</span><span class="pln">common<br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">+--</span><span class="pln"> ns</span><span class="pun">.</span><span class="pln">special<br /><br /></span><span class="com">// let's asume this will load following resource strings</span><span class="pln"><br /></span><span class="pun">{</span><span class="pln"><br />&nbsp; </span><span class="str">"en_US"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="str">"ns.special"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br />&nbsp; &nbsp; &nbsp; </span><span class="str">"app"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"name"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"i18n"</span><span class="pln"><br />&nbsp; &nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="pun">},</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="str">"ns.common"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{}</span><span class="pln"><br />&nbsp; </span><span class="pun">},</span><span class="pln"><br />&nbsp; </span><span class="str">"en"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="str">"ns.special"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br />&nbsp; &nbsp; &nbsp; </span><span class="str">"app"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"area"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"Area 51"</span><span class="pln"><br />&nbsp; &nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="pun">},</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="str">"ns.common"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{}</span><span class="pln"><br />&nbsp; </span><span class="pun">},</span><span class="pln"><br />&nbsp; </span><span class="str">"dev"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="str">"ns.common"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br />&nbsp; &nbsp; &nbsp; </span><span class="str">"app"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"company"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="str">"name"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"my company"</span><span class="pln"><br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"><br />&nbsp; &nbsp; &nbsp; </span><span class="pun">},</span><span class="pln"><br />&nbsp; &nbsp; &nbsp; </span><span class="str">"add"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"add"</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"><br />&nbsp; </span><span class="pun">}</span><span class="pln"><br /></span><span class="pun">}</span><span class="pln"><br /></span></code></pre>
+
+<p>you can translate using <em>$.t([namespace:]key, [options])</em></p>
+
+<pre><code><span class="pln">$</span><span class="pun">.</span><span class="pln">t</span><span class="pun">(</span><span class="str">'app.name'</span><span class="pun">);</span><span class="pln"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="com">// -&gt; i18n (from 'en-US' resourcefile)</span><span class="pln"><br />$</span><span class="pun">.</span><span class="pln">t</span><span class="pun">(</span><span class="str">'app.area'</span><span class="pun">);</span><span class="pln"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="com">// -&gt; Area 51 (from 'en' resourcefile)</span><span class="pln"><br />$</span><span class="pun">.</span><span class="pln">t</span><span class="pun">(</span><span class="str">'ns.common:app.company.name'</span><span class="pun">);</span><span class="pln"> </span><span class="com">// -&gt; my company (from 'dev' resourcefile)</span><span class="pln"><br />$</span><span class="pun">.</span><span class="pln">t</span><span class="pun">(</span><span class="str">'ns.common:add'</span><span class="pun">);</span><span class="pln"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="com">// -&gt; add (from 'dev' resourcefile)</span><span class="pln"><br /></span></code></pre>
+
+<p>If no namespace is prepended to the resource key i18n will take the default namespace provided on initalisation.</p>
+
+<h3>insert values into your translation</h3>
+
+<pre><code><span class="com">// given resource</span><span class="pln"><br /></span><span class="str">"insert"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"you are __myVar__"</span><span class="pun">,</span><span class="pln"><br /><br />$</span><span class="pun">.</span><span class="pln">t</span><span class="pun">(</span><span class="str">'insert'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln">myVar</span><span class="pun">:</span><span class="pln"> </span><span class="str">'great'</span><span class="pun">})</span><span class="pln"> </span><span class="com">// -&gt; you are great</span><span class="pln"><br /></span></code></pre>
+
+<h3>support for plurals</h3>
+
+<pre><code><span class="com">// given resource</span><span class="pln"><br /></span><span class="str">"child"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"__count__ child"</span><span class="pun">,</span><span class="pln"><br /></span><span class="str">"child_plural"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"__count__ children"</span><span class="pln"><br /><br />$</span><span class="pun">.</span><span class="pln">t</span><span class="pun">(</span><span class="str">'child'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln">count</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pun">})</span><span class="pln"> </span><span class="com">// -&gt; 1 child</span><span class="pln"><br />$</span><span class="pun">.</span><span class="pln">t</span><span class="pun">(</span><span class="str">'child'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln">count</span><span class="pun">:</span><span class="pln"> </span><span class="lit">3</span><span class="pun">})</span><span class="pln"> </span><span class="com">// -&gt; 3 children</span><span class="pln"><br /></span></code></pre>
+
+<p>You can set the <em>pluralSuffix</em> as an option on initialisation.</p>
+
+<h3>nesting</h3>
+
+<pre><code><span class="com">// given resource</span><span class="pln"><br /></span><span class="str">"app"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br />&nbsp; </span><span class="str">"area"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"Area 51"</span><span class="pun">,</span><span class="pln"><br />&nbsp; </span><span class="str">"district"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"District 9 is more fun than $t(app.area)"</span><span class="pln"><br /></span><span class="pun">}</span><span class="pln"><br /><br />$</span><span class="pun">.</span><span class="pln">t</span><span class="pun">(</span><span class="str">'app.district'</span><span class="pun">)</span><span class="pln"> </span><span class="com">// -&gt; District 9 is more fun than Area 51</span><span class="pln"><br /></span></code></pre>
+
+<h3>NEW v1.0: extended use of the jquery function</h3>
+
+<pre><code><span class="com">// given resource</span><span class="pln"><br /></span><span class="str">"attr"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="str">"placeholderText"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"search..."</span><span class="pun">,</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="str">"hoverText"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"don't have fear click me!"</span><span class="pun">,</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="str">"btnText"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"search"</span><span class="pln"><br /></span><span class="pun">}</span><span class="pln"><br /><br /></span><span class="com">// given html</span><span class="pln"><br /></span><span class="pun">&lt;</span><span class="pln">form id</span><span class="pun">=</span><span class="str">"form"</span><span class="pun">&gt;</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="pun">&lt;</span><span class="pln">input type</span><span class="pun">=</span><span class="str">"text"</span><span class="pln"> data</span><span class="pun">-</span><span class="pln">i18n</span><span class="pun">=</span><span class="str">"[placeholder]attr.placeholderText"</span><span class="pun">&gt;&lt;/</span><span class="pln">input</span><span class="pun">&gt;</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="com">// the placeholder text will be set to 'search...'</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="pun">&lt;</span><span class="pln">button data</span><span class="pun">-</span><span class="pln">i18n</span><span class="pun">=</span><span class="str">"[title]attr.hoverText;attr.btnText"</span><span class="pun">&gt;&lt;/</span><span class="pln">button</span><span class="pun">&gt;</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="com">// the button's text will be 'search' and on hover you should see 'don't have fear click me!'</span><span class="pln"><br /></span><span class="pun">&lt;</span><span class="str">/form&gt;<br /><br />/</span><span class="pun">/</span><span class="pln"> just </span><span class="kwd">do</span><span class="pln"> to translate all elements having attribute _data</span><span class="pun">-</span><span class="pln">i18n_<br />$</span><span class="pun">(</span><span class="str">'.nav'</span><span class="pun">).</span><span class="pln">i18n</span><span class="pun">();</span><span class="pln"><br /></span></code></pre>
+
+<p>You can set multiple attributes from wihin the <strong>data-i18n</strong> attribute by specifing the attribute by enclosing 
+it with <strong>[...]</strong> followed by the translation key and seperated by <strong>';'</strong>.</p>
+
+<p>When not setting a specific attribute (like on the button in above sample -> attr.btnText) i18next will set the 
+text of given element.</p>
+
+<h3>dynamic (non-static) resouce route</h3>
+
+<p>Set the <em>dynamicLoad</em> option to true on init</p>
+
+<pre><code><span class="pln">$</span><span class="pun">.</span><span class="pln">i18n</span><span class="pun">.</span><span class="pln">init</span><span class="pun">({</span><span class="pln"><br />&nbsp; &nbsp; lng</span><span class="pun">:</span><span class="pln"> </span><span class="str">'en-US'</span><span class="pln"><br />&nbsp; &nbsp; ns</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> namespaces</span><span class="pun">:</span><span class="pln"> </span><span class="pun">[</span><span class="str">'ns.common'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'ns.special'</span><span class="pun">],</span><span class="pln"> defaultNs</span><span class="pun">:</span><span class="pln"> </span><span class="str">'ns.special'</span><span class="pun">},</span><span class="pln"><br />&nbsp; &nbsp; dynamicLoad</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">,</span><span class="pln"><br />&nbsp; &nbsp; resGetPath</span><span class="pun">:</span><span class="pln"> </span><span class="str">'myPath/resources.json?ns=__ns__&amp;lng__lng__'</span><span class="pln"> </span><span class="com">// set this according to your needs</span><span class="pln"><br /></span><span class="pun">});</span><span class="pln"><br /></span></code></pre>
+
+<p>On init i18n will call the provided route with the querystring parameters language and namespaces (they will be 
+seperated by a + which should be a space on serverside).</p>
+
+<p>You will have to return something like:</p>
+
+<pre><code><span class="pun">{</span><span class="pln"><br />&nbsp; </span><span class="str">"en_US"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="str">"ns.special"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{...},</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="str">"ns.common"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{...}</span><span class="pln"><br />&nbsp; </span><span class="pun">},</span><span class="pln"><br />&nbsp; </span><span class="str">"en"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="str">"ns.special"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{..},</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="str">"ns.common"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{...}</span><span class="pln"><br />&nbsp; </span><span class="pun">},</span><span class="pln"><br />&nbsp; </span><span class="str">"dev"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="str">"ns.special"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{..},</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="str">"ns.common"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{..}</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"><br />&nbsp; </span><span class="pun">}</span><span class="pln"><br /></span><span class="pun">}</span><span class="pln"><br /></span></code></pre>
+
+<h3>post missing resources</h3>
+
+<p>Just init i18n with the according options (you shouldn't use this option in production):</p>
+
+<pre><code><span class="pln">$</span><span class="pun">.</span><span class="pln">i18n</span><span class="pun">.</span><span class="pln">init</span><span class="pun">({</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="com">// ...</span><span class="pln"><br />&nbsp; &nbsp; sendMissing</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">,</span><span class="pln"><br />&nbsp; &nbsp; resPostPath</span><span class="pun">:</span><span class="pln"> </span><span class="str">'myPath/add/__lng__/__ns__'</span><span class="pun">,</span><span class="pln"> </span><span class="com">// defaults to 'locales/add/__lng__/__ns__',</span><span class="pln"><br /></span><span class="pun">});</span><span class="pln"><br /></span></code></pre>
+
+<h2>Inspiration</h2>
+
+<ul>
+<li><a href="https://github.com/jpjoyal/jsperanto">jsperanto</a>. Simple translation for your javascripts, yummy with your favorite templates engine like EJS.</li>
+</ul>
+
+<h2>Release Notes</h2>
+
+<h3>v1.0</h3>
+
+<ul>
+<li>support for other attribute translation via <em>data-i18n</em> attribute</li>
+<li>bug fixes</li>
+<li>tests with qunit and sinon</li>
+</ul>
+
+<h3>v0.9</h3>
+
+<ul>
+<li>multi-namespace support</li>
+<li>loading static files or dynamic route</li>
+<li>jquery function for <em>data-i18n</em> attibute</li>
+<li>post missing translations to the server</li>
+<li>graceful fallback en-US -> en -> fallbackLng</li>
+<li>localstorage support</li>
+<li>support for pluralized strings</li>
+<li>insertion of variables into translations</li>
+<li>translation nesting</li>
+</ul>
+
+</section>
+
+<footer>
+        <p>Copyright 2011 Jan Mühlemann</p>
+</footer>
+
+
+<script type="text/javascript" >
+    $(window).load(function () {
+        $('#title').fadeIn(1000, function(){
+            $('#subtitle').fadeIn(2000);            
+        });
+
+        var nav = new FlexibleNavMaker('#content h1, #content h2, #content h3').make().prependTo('body');
+        new FlexibleNav(nav);
+        $(".flexible-nav").hide();
+    });
+
+    var fadeout = null;
+    window.onscroll = function() {
+        
+        clearTimeout(fadeout);
+                
+        $(".flexible-nav").fadeIn('slow')
+        
+        fadeout = setTimeout(outlineFadeOut,4000);
+    }
+    
+    var outlineFadeOut = function() {
+        $(".flexible-nav").fadeOut()
+    }
+
+</script>
+
+</body>
+
+</html>

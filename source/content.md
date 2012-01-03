@@ -25,7 +25,7 @@ What else will you find:
 
 # Usage Sample
 
-Add your resourcefile under /locales/en-US/translation.json
+Add your resourcefile under /locales/en-US/translation.json.
 
     {
         "app": {

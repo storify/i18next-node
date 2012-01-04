@@ -283,7 +283,7 @@ Just init i18n with the according options (you shouldn't use this option in prod
 
 ## Release Notes
 
-### v0.5.1
+### v0.5.0
 
 - options saveMissing
 - multiple plurals

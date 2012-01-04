@@ -223,6 +223,38 @@ you can translate using _(i18next.)t([namespace:]key, [options])_
 
 You can set the _pluralSuffix_ as an option on initialisation.
 
+### extended plural support for multiple plurals
+
+    // given resource
+    sl: { 
+        translation: { 
+            beer: 'Pivo',
+            beer_plural_two: 'Pivi',
+            beer_plural_few: 'Piva',
+            beer_plural: 'stop drinking ;)'
+        } 
+    }
+
+    $.t('beer', {count: 1})   // 'Pivo'
+    $.t('beer', {count: 2})   // Pivi'
+    $.t('beer', {count: 3})   // Piva'
+    $.t('beer', {count: 4})   // Piva'
+    $.t('beer', {count: 5})   // stop drinking ;)'
+
+__HINT:__ For now we added only _slovenian_ to the plural rules set as a sample how to do it, but you can easily add new rules 
+on runtime or feel free to fork the project and send a pull request.
+
+    $.i18n.pluralExtensions.addRule('sl', function (n) {
+        return n % 100 === 1 ? 'one' : n % 100 === 2 ? 'two' : n % 100 === 3 || n % 100 === 4 ? 'few' : 'other';
+    });
+
+    // return value 'one' will map to the singular form '[key]'
+    // return value 'other' will map to the common plural form '[key]_plural'
+    // return value 'two' will map to the extended plural in form '[key]_plural_two'
+    // return value 'few' will map to the extended plural in form '[key]_plural_few'
+
+You can find the plural rules on [unicode.org](http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html).
+
 ### nesting
 
     // given resource
@@ -237,9 +269,9 @@ You can set the _pluralSuffix_ as an option on initialisation.
 
 Just init i18n with the according options (you shouldn't use this option in production):
 
-    $.i18n.init({
+    i18next.init({
         // ...
-        sendMissing: true,
+        saveMissing: true,
         resSetPath: 'myFolder/__lng__/__ns__.json'
     });
 
@@ -250,6 +282,12 @@ Just init i18n with the according options (you shouldn't use this option in prod
 - [i18n-node](https://github.com/mashpie/i18n-node)
 
 ## Release Notes
+
+### v0.5.1
+
+- options saveMissing
+- multiple plurals
+- bug fix
 
 ### v0.0.1
 

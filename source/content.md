@@ -18,6 +18,7 @@ What else will you find:
 - support for pluralized strings
 - insertion of variables into translations
 - translation nesting
+- translation contexts
 
 # Installation
 
@@ -210,7 +211,7 @@ you can translate using _(i18next.)t([namespace:]key, [options])_
     // given resource
     "insert": "you are __myVar__",
 
-    t('insert', {myVar: 'great'}) // -> you are great
+    t('insert', {myVar: 'great'}); // -> you are great
 
 ### support for plurals
 
@@ -218,8 +219,8 @@ you can translate using _(i18next.)t([namespace:]key, [options])_
     "child": "__count__ child",
     "child_plural": "__count__ children"
 
-    t('child', {count: 1}) // -> 1 child
-    t('child', {count: 3}) // -> 3 children
+    t('child', {count: 1}); // -> 1 child
+    t('child', {count: 3}); // -> 3 children
 
 You can set the _pluralSuffix_ as an option on initialisation.
 
@@ -235,11 +236,11 @@ You can set the _pluralSuffix_ as an option on initialisation.
         } 
     }
 
-    $.t('beer', {count: 1})   // 'Pivo'
-    $.t('beer', {count: 2})   // Pivi'
-    $.t('beer', {count: 3})   // Piva'
-    $.t('beer', {count: 4})   // Piva'
-    $.t('beer', {count: 5})   // stop drinking ;)'
+    t('beer', {count: 1});   // 'Pivo'
+    t('beer', {count: 2});   // Pivi'
+    t('beer', {count: 3});   // Piva'
+    t('beer', {count: 4});   // Piva'
+    t('beer', {count: 5});   // stop drinking ;)'
 
 __HINT:__ For now we added only _slovenian_ to the plural rules set as a sample how to do it, but you can easily add new rules 
 on runtime or feel free to fork the project and send a pull request.
@@ -255,6 +256,43 @@ on runtime or feel free to fork the project and send a pull request.
 
 You can find the plural rules on [unicode.org](http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html).
 
+### translation contexts
+
+You can provide a translation key in form `[key]_[yourContext]`. By passing in _context_ through options i18next 
+can choose correct form:
+
+    // given resource
+    en-US: { 
+        translation: { 
+            friend: 'a friend',
+            friend_male: 'a boyfriend',
+            friend_female: 'a girlfriend'
+        } 
+    }
+
+    t('friend');                        // returns default 'a friend'
+    t('friend', {context: 'male'});     // returns 'a boyfriend'
+    t('friend', {context: 'female'});   // returns 'a girlfriend'
+
+__hint:__ might be a good idea to suffix your keys using context with _\_context_.
+
+You can even use context and plurals in combination:
+
+    // given resource
+    en-US: { 
+        translation: { 
+            friend: '__count__ friend',
+            friend_male: '__count__ boyfriend',
+            friend_female: '__count__ girlfriend'
+            friend_plural: '__count__ friends',
+            friend_male_plural: '__count__ boyfriends',
+            friend_female_plural: '__count__ girlfriends'
+        } 
+    }
+
+    t('friend', {count: 1});                        // returns '1 friend'
+    t('friend', {context: 'female', count: 10});    // returns '10 girlfriends'
+
 ### nesting
 
     // given resource
@@ -263,7 +301,7 @@ You can find the plural rules on [unicode.org](http://unicode.org/repos/cldr-tmp
       "district": "District 9 is more fun than $t(app.area)"
     }
 
-    t('app.district') // -> District 9 is more fun than Area 51
+    t('app.district'); // -> District 9 is more fun than Area 51
 
 ### store missing resources to filesystem
 
@@ -282,6 +320,13 @@ Just init i18n with the according options (you shouldn't use this option in prod
 - [i18n-node](https://github.com/mashpie/i18n-node)
 
 ## Release Notes
+
+### v1.2.0
+
+- keep version in sync with clientside version
+- better support to override default sync
+- support for translation contexts
+- fixed init without options, callback
 
 ### v0.5.0
 

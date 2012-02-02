@@ -321,6 +321,10 @@ Just init i18n with the according options (you shouldn't use this option in prod
 
 ## Release Notes
 
+### v1.2.3
+
+- updated client
+
 ### v1.2.0
 
 - keep version in sync with clientside version

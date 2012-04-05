@@ -81,6 +81,22 @@ If the key is not in the fallback language the key or a optional defaultValue wi
 
     var takeDefault = t('app.type', {defaultValue: 'OpenSource'}); // -> OpenSource
 
+### use it in express routes
+
+By adding the middleware you could access i18next inside your routes like this:
+
+    app.get('/', function(req, res) {
+        // current language
+        var currentLng = req.locale;
+
+        // access i18n
+        var i18n = req.i18n;
+
+        // translate
+        var appName = i18n.t('app.name');
+        res.send(appName);
+    });
+
 ### use it in you template
 
 Register AppHelper so you can use the translate function in your template:
@@ -321,7 +337,7 @@ Just init i18n with the according options (you shouldn't use this option in prod
 
 ## Release Notes
 
-### v1.2.3
+### v1.2.3 & v1.2.4
 
 - updated client
 

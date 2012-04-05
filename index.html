@@ -98,6 +98,12 @@ If the key is not in the fallback language the key or a optional defaultValue wi
 
 <pre><code><span class="kwd">var</span><span class="pln"> takeDefault </span><span class="pun">=</span><span class="pln"> t</span><span class="pun">(</span><span class="str">'app.type'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln">defaultValue</span><span class="pun">:</span><span class="pln"> </span><span class="str">'OpenSource'</span><span class="pun">});</span><span class="pln"> </span><span class="com">// -&gt; OpenSource</span><span class="pln"><br /></span></code></pre>
 
+<h3>use it in express routes</h3>
+
+<p>By adding the middleware you could access i18next inside your routes like this:</p>
+
+<pre><code><span class="pln">app</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="str">'/'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">req</span><span class="pun">,</span><span class="pln"> res</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="com">// current language</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="kwd">var</span><span class="pln"> currentLng </span><span class="pun">=</span><span class="pln"> req</span><span class="pun">.</span><span class="pln">locale</span><span class="pun">;</span><span class="pln"><br /><br />&nbsp; &nbsp; </span><span class="com">// access i18n</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="kwd">var</span><span class="pln"> i18n </span><span class="pun">=</span><span class="pln"> req</span><span class="pun">.</span><span class="pln">i18n</span><span class="pun">;</span><span class="pln"><br /><br />&nbsp; &nbsp; </span><span class="com">// translate</span><span class="pln"><br />&nbsp; &nbsp; </span><span class="kwd">var</span><span class="pln"> appName </span><span class="pun">=</span><span class="pln"> i18n</span><span class="pun">.</span><span class="pln">t</span><span class="pun">(</span><span class="str">'app.name'</span><span class="pun">);</span><span class="pln"><br />&nbsp; &nbsp; res</span><span class="pun">.</span><span class="pln">send</span><span class="pun">(</span><span class="pln">appName</span><span class="pun">);</span><span class="pln"><br /></span><span class="pun">});</span><span class="pln"><br /></span></code></pre>
+
 <h3>use it in you template</h3>
 
 <p>Register AppHelper so you can use the translate function in your template:</p>
@@ -203,7 +209,7 @@ can choose correct form:</p>
 
 <h2>Release Notes</h2>
 
-<h3>v1.2.3</h3>
+<h3>v1.2.3 &amp; v1.2.4</h3>
 
 <ul>
 <li>updated client</li>

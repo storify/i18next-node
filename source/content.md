@@ -105,9 +105,16 @@ Register AppHelper so you can use the translate function in your template:
 
 Now you can (depending on your template language) do something like this in you template:
 
-    // sample in jade
+    // translate sample in jade
     body
         span= t('app.name')
+
+or grab the current language
+
+    // get language sample in jade
+    body
+        span= i18n.lng()
+
 
 ### Basic options for init
 
@@ -336,6 +343,11 @@ Just init i18n with the according options (you shouldn't use this option in prod
 - [i18n-node](https://github.com/mashpie/i18n-node)
 
 ## Release Notes
+
+### v1.2.5
+
+- added function to grap current language from template (i18n.lng())
+- merged [pull request #15](https://github.com/jamuhl/i18next-node/pull/15) for express.js v3 support
 
 ### v1.2.3 & v1.2.4
 

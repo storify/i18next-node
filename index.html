@@ -112,7 +112,11 @@ If the key is not in the fallback language the key or a optional defaultValue wi
 
 <p>Now you can (depending on your template language) do something like this in you template:</p>
 
-<pre><code><span class="com">// sample in jade</span><span class="pln"><br />body<br />&nbsp; &nbsp; span</span><span class="pun">=</span><span class="pln"> t</span><span class="pun">(</span><span class="str">'app.name'</span><span class="pun">)</span><span class="pln"><br /></span></code></pre>
+<pre><code><span class="com">// translate sample in jade</span><span class="pln"><br />body<br />&nbsp; &nbsp; span</span><span class="pun">=</span><span class="pln"> t</span><span class="pun">(</span><span class="str">'app.name'</span><span class="pun">)</span><span class="pln"><br /></span></code></pre>
+
+<p>or grab the current language</p>
+
+<pre><code><span class="com">// get language sample in jade</span><span class="pln"><br />body<br />&nbsp; &nbsp; span</span><span class="pun">=</span><span class="pln"> i18n</span><span class="pun">.</span><span class="pln">lng</span><span class="pun">()</span><span class="pln"><br /></span></code></pre>
 
 <h3>Basic options for init</h3>
 
@@ -208,6 +212,13 @@ can choose correct form:</p>
 </ul>
 
 <h2>Release Notes</h2>
+
+<h3>v1.2.5</h3>
+
+<ul>
+<li>added function to grap current language from template (i18n.lng())</li>
+<li>merged <a href="https://github.com/jamuhl/i18next-node/pull/15">pull request #15</a> for express.js v3 support</li>
+</ul>
 
 <h3>v1.2.3 &amp; v1.2.4</h3>
 

@@ -1,8 +1,8 @@
 {
   "author": "Jan Muehlemann <jan.muehlemann@gmail.com>",
   "name": "i18next",
-  "description": "A i18n middleware for the Express.js framework.",
-  "version": "1.2.5",
+  "description": "i18n made easy - full featured: middleware, template support plus clientside use",
+  "version": "1.6.4",
   "repository": {
     "type": "git",
     "url": "git://github.com/jamuhl/i18next-node.git"
@@ -19,7 +19,14 @@
     "cookies": ">= 0.2.2"
   },
   "devDependencies": {
-    "mocha": "~0.10.2"
+      "mocha": ">= 0.10.2"
+    , "expect.js": ">=0.0.1"
+    , "sinon": ">=0.0.1"
+    , "supertest": ">=0.0.1"
+    , "express": ">=0.0.1"
+    , "jade": ">=0.0.1"
+    , "benchmark": ">=0.0.1"
+    , "microtime": ">=0.0.1"
   },
   "scripts": {
     "test": "make test"

@@ -14,6 +14,9 @@ html(lang="en")
         | &nbsp;
         a#de(href='/?setLng=de-DE') de-DE
 
+        h3 go to online editor
+        a(href='/i18next') webtranslate
+
         h3 i18n used in template via express app.helper
         span= t('app.name') + ' '
         span= t('app.area')
@@ -21,6 +24,10 @@ html(lang="en")
 
         h5 with value insert t('app.insert', {youAre: 'great'})
         span= i18n.t('app.insert', {youAre: 'great'})
+
+        h5 sprintf support
+        span= t('ns.common:sprintf', { postProcess: 'sprintf', sprintf: ['a', 'b', 'c', 'd'] })
+        button(title!=t('ns.common:sprintf', { postProcess: 'sprintf', sprintf: ['a', 'b', 'c', 'd'] })) on title
 
         h5 with plural t('app.child', {count: n})
         span= t('app.child', {count: 1}) + ' - '
@@ -50,7 +57,7 @@ html(lang="en")
         h5 post missing
         span#missing
 
-        script(type="text/javascript")
+        script
 
             var qsParm = new Array();
             function qs() {
@@ -73,7 +80,8 @@ html(lang="en")
                 useLocalStorage: false,
                 resGetPath: 'locales/resources.json?lng=__lng__&ns=__ns__',
                 dynamicLoad: true,
-                sendMissing: true
+                sendMissing: true,
+                sendMissingTo: 'current'
             };
 
             if (qsParm.setLng) options.lng = qsParm.setLng;
